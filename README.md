@@ -11,6 +11,7 @@ This software allows any data to be archived as a video by encoding the binary i
 ## Usage
 You can execute this program with command, or just simply double click the exe file ;)
 
+**Download: [Releases](https://github.com/Nodoka4318/AnyFileToVideoConverter/releases)**
 ### with cmd
 - Encoding
 ```ps1
@@ -21,6 +22,9 @@ aftvc.exe encode path/to/inputfile path/to/outputfile
 aftvc.exe decode path/to/inputfile path/to/outputfile
 ```
 If you set "true" as the fourth argument, you can see my stupid logs.
+
+## Disclaimer
+The author assumes no responsibility for any problems with this software.
 
 ## TODO
 - [ ] Customization of the amount of data in the QR code
