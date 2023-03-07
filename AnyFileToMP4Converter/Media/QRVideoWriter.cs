@@ -17,12 +17,11 @@ namespace AnyFileToMP4Converter.Media {
             _file = file;
         }
 
-        public async Task WriteAsync(string path, int fps) {
+        public void Write(string path, int fps) {
             using (var writer = new VideoWriter(path, FourCC.H264, fps, new Size(QR.QR_SIZE, QR.QR_SIZE))) {
                 while (!_file->IsEnded) {
-                    Console.WriteLine(_file->IsEnded);
                     using (var m = QR.CreateQRCode(_file->GetCurrentSecHex()).ToMat()) {
-                        Console.WriteLine($"Writing {_file->CurrentSec} of {_file->SecLength}");
+                        Console.WriteLine($"Writing {_file->CurrentSec} of {_file->SecLength + 1}");
                         writer.Write(m);
                     }
                 }

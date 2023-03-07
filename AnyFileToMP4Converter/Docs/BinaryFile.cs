@@ -11,15 +11,15 @@ namespace AnyFileToMP4Converter.Docs {
         public string Hex => _hex;
         public Meta MetaData { get; private set; }
         public int SecLength => _secLength;
-        public bool IsEnded => _currentSec >= _secLength;
+        public bool IsEnded => _currentSec > _secLength;
         public int CurrentSec => _currentSec;
 
         private string _path;
         private int _currentSec = 0; // 0: メタデータ, 1~_secLength: データ
-        private string _hex;
+        private string _hex; // 長さは必ず偶数
         private int _secLength;
 
-        const int SINGLE_SEC_LENGTH = 1024;
+        const int SINGLE_SEC_LENGTH = 2048;
 
         public BinaryFile(string path) {
             _path = path;
@@ -29,7 +29,7 @@ namespace AnyFileToMP4Converter.Docs {
                 length = _hex.Length
             };
 
-            _secLength = (int) Math.Ceiling((double) (_hex.Length / SINGLE_SEC_LENGTH)) + 1; // よく分からんけど+1が正しいらしい
+            _secLength = (int) Math.Ceiling((double) (_hex.Length / SINGLE_SEC_LENGTH)) + 1; // よく分からんけど+2が正しいらしい
         }
 
         private string GetHexStringFromFile() {
@@ -51,12 +51,12 @@ namespace AnyFileToMP4Converter.Docs {
                 var curIndex = (_currentSec - 1) * SINGLE_SEC_LENGTH;
                 curSecHex = _hex.Substring(
                     curIndex, 
-                    (_hex.Length - curIndex + 1) >= SINGLE_SEC_LENGTH ? SINGLE_SEC_LENGTH : _hex.Length - curIndex + 1
+                    (_hex.Length - curIndex + 1) >= SINGLE_SEC_LENGTH ? SINGLE_SEC_LENGTH : _hex.Length - curIndex
                     );
             }
             _currentSec++;
 
-            Console.WriteLine($"{_currentSec} {_secLength}");
+            // Console.WriteLine($"{_currentSec} {_secLength}");
             return curSecHex;
         }
     }
