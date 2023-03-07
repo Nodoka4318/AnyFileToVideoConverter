@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace AnyFileToVideoConverter.Docs {
     internal class Meta {
-        public string filename { get; set; }
-        public int length { get; set; }
+        public string FileName { get; set; }
+        public int Length { get; set; }
+
+        // NativeAOTだとJsonSerializer動かないからしゃーなし
+        public static Meta FromText(string text) {
+            var vals = text.Split("<>");
+            return new Meta() {
+                FileName = vals[0],
+                Length = int.Parse(vals[1])
+            };
+        }
+
+        public string BuildText() {
+            return $"{FileName}<>{Length}";
+        }
     }
 }

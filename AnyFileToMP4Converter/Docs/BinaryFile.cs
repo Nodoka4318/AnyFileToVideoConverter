@@ -25,8 +25,8 @@ namespace AnyFileToVideoConverter.Docs {
             _path = path;
             _hex = GetHexStringFromFile();
             MetaData = new Meta() {
-                filename = Path.GetFileName(path),
-                length = _hex.Length
+                FileName = Path.GetFileName(path),
+                Length = _hex.Length
             };
 
             _secLength = (int) Math.Ceiling((double) (_hex.Length / SINGLE_SEC_LENGTH)) + 1; // よく分からんけど+2が正しいらしい
@@ -46,11 +46,11 @@ namespace AnyFileToVideoConverter.Docs {
         public string GetCurrentSecHex() {
             string curSecHex;
             if (_currentSec == 0)
-                curSecHex = JsonSerializer.Serialize(MetaData);
+                curSecHex = MetaData.BuildText();
             else {
                 var curIndex = (_currentSec - 1) * SINGLE_SEC_LENGTH;
                 curSecHex = _hex.Substring(
-                    curIndex, 
+                    curIndex,
                     (_hex.Length - curIndex + 1) >= SINGLE_SEC_LENGTH ? SINGLE_SEC_LENGTH : _hex.Length - curIndex
                     );
             }

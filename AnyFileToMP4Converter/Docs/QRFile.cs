@@ -26,7 +26,7 @@ namespace AnyFileToVideoConverter.Docs {
             while (!_reader.IsEnded) {
                 if (_reader.CurrentIndex == 0) {
                     var metaStr = _reader.ReadCurrentFrame();
-                    MetaData = JsonSerializer.Deserialize<Meta>(metaStr);
+                    MetaData = Meta.FromText(metaStr);
                     continue;
                 }
 
@@ -39,7 +39,7 @@ namespace AnyFileToVideoConverter.Docs {
             _bytes = bs.ToArray(); // 複製
             bs.Clear(); // 解放
 
-            if (MetaData.length != _bytes.Length)
+            if (MetaData.Length != _bytes.Length)
                 IsCorrupted = true; // ファイル破損
         }
 
@@ -47,7 +47,7 @@ namespace AnyFileToVideoConverter.Docs {
             if (_bytes.Length <= 0) {
                 throw new InvalidOperationException("まだデータが読まれていません。");
             }
-            File.WriteAllBytes(directory + $@"\{MetaData.filename}", _bytes);
+            File.WriteAllBytes(directory + $@"\{MetaData.FileName}", _bytes);
         }
     }
 }
