@@ -1,4 +1,4 @@
-﻿using AnyFileToMP4Converter.Docs;
+﻿using AnyFileToVideoConverter.Docs;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyFileToMP4Converter.Media {
+namespace AnyFileToVideoConverter.Media {
     internal unsafe class QRVideoWriter : IDisposable {
         private BinaryFile* _file;
         private bool _disposed = false;
@@ -20,8 +20,12 @@ namespace AnyFileToMP4Converter.Media {
         public void Write(string path, int fps) {
             using (var writer = new VideoWriter(path, FourCC.H264, fps, new Size(QR.QR_SIZE, QR.QR_SIZE))) {
                 while (!_file->IsEnded) {
-                    using (var m = QR.CreateQRCode(_file->GetCurrentSecHex()).ToMat()) {
-                        Console.WriteLine($"Writing {_file->CurrentSec} of {_file->SecLength + 1}");
+                    Program.Log($"Writing {_file->CurrentSec + 1} of {_file->SecLength + 1}");
+                    var curHex = _file->GetCurrentSecHex();                   
+                    if (curHex == "")
+                        continue;
+
+                    using (var m = QR.CreateQRCode(curHex).ToMat()) {   
                         writer.Write(m);
                     }
                 }

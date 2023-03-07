@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AnyFileToMP4Converter.Docs {
+namespace AnyFileToVideoConverter.Docs {
     internal class BinaryFile {
         public string FilePath => _path;
         public string Hex => _hex;
@@ -56,7 +56,7 @@ namespace AnyFileToMP4Converter.Docs {
             }
             _currentSec++;
 
-            // Console.WriteLine($"{_currentSec} {_secLength}");
+            // Program.Log($"{_currentSec} {_secLength}");
             return curSecHex;
         }
     }

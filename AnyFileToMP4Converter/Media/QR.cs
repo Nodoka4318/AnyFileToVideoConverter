@@ -10,7 +10,7 @@ using ZXing.QrCode;
 using ZXing;
 using ZXing.Common;
 
-namespace AnyFileToMP4Converter.Media {
+namespace AnyFileToVideoConverter.Media {
     internal class QR {
         public const int QR_SIZE = 400; // たぶんこれが最適
         public const int QR_MARGIN = 40; // TODO: パラメータ化
@@ -47,8 +47,8 @@ namespace AnyFileToMP4Converter.Media {
             // qrcode.Save(@"C:\Users\Nodoka\Desktop\curqr.png", ImageFormat.Png);
             var res = reader.Decode(qrcode);
             if (res == null) {
-                qrcode.Save(@"C:\Users\Nodoka\Desktop\curqr.png", ImageFormat.Png);
-                throw new Exception("QRコードの読み取りに失敗しました。");
+                // qrcode.Save(@"C:\Users\Nodoka\Desktop\curqr.png", ImageFormat.Png);
+                throw new Exception("Failed to decode a QR code.");
             } else {
                 return res.Text;
             }

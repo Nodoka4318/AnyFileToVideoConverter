@@ -1,4 +1,4 @@
-﻿using AnyFileToMP4Converter.Media;
+﻿using AnyFileToVideoConverter.Media;
 using OpenCvSharp;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AnyFileToMP4Converter.Docs {
+namespace AnyFileToVideoConverter.Docs {
     internal class QRFile {
         public Meta MetaData { get; private set; }
+        public bool IsCorrupted { get; private set; }
 
         private QRVideoReader _reader;
         private byte[] _bytes;
@@ -37,6 +38,9 @@ namespace AnyFileToMP4Converter.Docs {
 
             _bytes = bs.ToArray(); // 複製
             bs.Clear(); // 解放
+
+            if (MetaData.length != _bytes.Length)
+                IsCorrupted = true; // ファイル破損
         }
 
         public void SaveFile(string directory) {

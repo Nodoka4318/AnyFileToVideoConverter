@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyFileToMP4Converter.Media {
+namespace AnyFileToVideoConverter.Media {
     internal class QRVideoReader {
         public string Path => _path;
         public int Length => _length;
@@ -28,7 +28,7 @@ namespace AnyFileToMP4Converter.Media {
         }
 
         public string ReadCurrentFrame() {
-            Console.WriteLine($"processing at {_currentIndex + 1} of {_length}");
+            Program.Log($"processing at {_currentIndex + 1} of {_length}");
             Bitmap bmp = new Bitmap(_size, _size);
             using (var m = new Mat()) {
                 if (!_vcap.IsOpened()) {
